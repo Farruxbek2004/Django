@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Question(models.Model):
     text = models.CharField(max_length=255)
     pub_date = models.DateTimeField('data published', null=True)
@@ -9,7 +10,10 @@ class Question(models.Model):
 
 
 class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
     text = models.CharField(max_length=255)
     votes = models.IntegerField(default=0)
     is_true = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.text} - {self.is_true}'
